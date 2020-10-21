@@ -1,5 +1,5 @@
 - name: Check if VSCode is already defined 
-  shell: "/usr/local/bin/brew list --cask"
+  shell: "{{ brew }} list --cask"
   register: vscode_state
 
 - name: Install VSCode If not installed 
