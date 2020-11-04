@@ -1,19 +1,17 @@
-- name: Add Microsoft key 
+- name: Import Microsoft signing key 
   rpm_key:
-    key: "{{ MS_Key }}"
+    key: "{{ microsoft_key }}"
 
-- name: Add VSCode repo 
-  copy:
-    content: |
-      [code]
-      name=Visual Studio Code
-      baseurl=https://packages.microsoft.com/yumrepos/vscode
-      enabled=1
-      gpgcheck=1
-      gpgkey=https://packages.microsoft.com/keys/microsoft.asc
-    dest: "{{ vscode_repo }}"
+- name: Add Visual Studio Code repository
+  yum_repository:
+    name: code
+    file: vscode
+    description: VSCode repo
+    baseurl: "{{ vscode_baseurl }}"
+    gpgcheck: True 
+    gpgkey: "{{ microsoft_key }}"
 
-- name: Install VSCode 
+- name: Install Visual Studio Code
   dnf:
-    name: "{{ vscode }}"
-    state: latest
+    name: code 
+    state: present
